@@ -1,0 +1,23 @@
+div{
+    background-color: rgb(70, 70, 70);
+    width: 100%;
+    height: 60px;
+    text-align: left;
+    border: 0.2px black
+    
+}
+a{
+    color: white;
+    text-decoration: none;
+    position: relative;
+    top: 20px;
+
+    &:hover{
+        padding-bottom: 21px;
+        border-bottom: solid red 2px;
+        
+        
+    }
+
+
+}

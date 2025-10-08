@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle Desperdício Borracha</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <img src="500x250.png" alt="">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#checkpoint1">Registro <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#checkpoint2">Gráfico</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#checkpoint3">Histórico</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Controle de Desperdício de Borracha</h1>
+  </header>
+
+  <div class="container">
+    <section class="form-section" id="checkpoint1">
+      <h2>Registrar Desperdício</h2>
+      <form id="formDesperdicio">
+        <div class="form-group">
+          <label for="data">Data:</label>
+          <input type="date" class="form-control" id="data" required>
+        </div>
+        <div class="form-group">
+          <label for="quantidade">Quantidade Desperdiçada (kg):</label>
+          <input type="number" class="form-control" id="quantidade" required>
+        </div>
+        <div class="form-group">
+          <label for="motivo">Motivo do Desperdício:</label>
+          <textarea class="form-control" id="motivo" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </form>
+    </section>
+
+    <section id="checkpoint2" class="dashboard-section my-5">
+      <h2>Gráfico de Desperdício</h2>
+      <canvas id="graficoDesperdicio"></canvas>
+    </section>
+
+    <section id="checkpoint3" class="historico-section">
+      <h2>Histórico de Desperdício</h2>
+      <table id="tabelaHistorico" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Quantidade (kg)</th>
+            <th>Motivo</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 - Todos os direitos reservados</p>
+    <nav>
+      <ul class="list-inline">
+        <li class="list-inline-item">Termos de uso</li>
+        <li class="list-inline-item">Política de privacidade</li>
+        <li class="list-inline-item">Sobre nós</li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let desperdicios = [];
+      let edicaoIndice = -1;
+
+      const formDesperdicio = document.getElementById('formDesperdicio');
+      const tabelaHistorico = document.getElementById('tabelaHistorico').getElementsByTagName('tbody')[0];
+      const graficoDesperdicio = document.getElementById('graficoDesperdicio');
+      const dataInput = document.getElementById('data');
+      const quantidadeInput = document.getElementById('quantidade');
+      const motivoInput = document.getElementById('motivo');
+
+      const btnCancelar = document.createElement('button');
+      btnCancelar.textContent = 'Cancelar';
+      btnCancelar.type = 'button';
+      btnCancelar.classList.add('btn', 'btn-secondary', 'ml-2');
+      btnCancelar.style.display = 'none';
+      formDesperdicio.appendChild(btnCancelar);
+
+      let chart = null;
+
+      function processarDesperdicio(event) {
+        event.preventDefault();
+        const data = dataInput.value;
+        const quantidade = parseFloat(quantidadeInput.value);
+        const motivo = motivoInput.value;
+
+        if (!data || !quantidade || !motivo) {
+          alert("Por favor, preencha todos os campos.");
+          return;
+        }
+
+        if (quantidade <= 0 || isNaN(quantidade)) {
+          alert("A quantidade de desperdício deve ser um número positivo.");
+          return;
+        }
+
+        if (motivo.trim() === "") {
+          alert("O motivo do desperdício não pode estar vazio.");
+          return;
+        }
+
+        if (edicaoIndice !== -1) {
+          desperdicios[edicaoIndice] = { data, quantidade, motivo };
+          edicaoIndice = -1;
+          formDesperdicio.reset();
+        } else {
+          desperdicios.push({ data, quantidade, motivo });
+        }
+
+        atualizarTabelaHistorico();
+        atualizarGrafico();
+        formDesperdicio.reset();
+      }
+
+      function atualizarTabelaHistorico() {
+        tabelaHistorico.innerHTML = '';
+        desperdicios.forEach((desperdicio, indice) => {
+          const row = tabelaHistorico.insertRow();
+          row.insertCell(0).textContent = desperdicio.data;
+          row.insertCell(1).textContent = `${desperdicio.quantidade} kg`;
+          row.insertCell(2).textContent = desperdicio.motivo;
+
+          const acaoCell = row.insertCell(3);
+          const btnEditar = document.createElement('button');
+          btnEditar.textContent = 'Editar';
+          btnEditar.classList.add('btn', 'btn-warning', 'btn-sm', 'mr-2');
+
+          btnEditar.addEventListener('click', () => {
+            editarRegistro(indice);
+            document.getElementById('checkpoint1').scrollIntoView({ behavior: 'smooth' });
+          });
+          acaoCell.appendChild(btnEditar);
+
+          const btnExcluir = document.createElement('button');
+          btnExcluir.textContent = 'Excluir';
+          btnExcluir.classList.add('btn', 'btn-danger', 'btn-sm');
+          btnExcluir.addEventListener('click', () => excluirRegistro(indice));
+          acaoCell.appendChild(btnExcluir);
+        });
+      }
+
+      function editarRegistro(indice) {
+        const desperdicio = desperdicios[indice];
+        dataInput.value = desperdicio.data;
+        quantidadeInput.value = desperdicio.quantidade;
+        motivoInput.value = desperdicio.motivo;
+        edicaoIndice = indice;
+        btnCancelar.style.display = 'inline-block';
+      }
+
+      function excluirRegistro(indice) {
+        if (confirm('Tem certeza que deseja excluir este registro?')) {
+          desperdicios.splice(indice, 1);
+          atualizarTabelaHistorico();
+          atualizarGrafico();
+        }
+      }
+
+      function atualizarGrafico() {
+        const labels = desperdicios.map(d => d.data);
+        const data = desperdicios.map(d => d.quantidade);
+
+        if (chart) {
+          chart.data.labels = labels;
+          chart.data.datasets[0].data = data;
+          chart.update();
+        } else {
+          const ctx = graficoDesperdicio.getContext('2d');
+          chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Desperdício de Borracha (kg)',
+                data: data,
+                borderColor: '#00a8ff',
+                backgroundColor: 'rgb(0, 110, 255)',
+                borderWidth: 2,
+                fill: false,
+                tension: 0.1
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        }
+      }
+
+      formDesperdicio.addEventListener('submit', processarDesperdicio);
+      btnCancelar.addEventListener('click', () => {
+        edicaoIndice = -1;
+        formDesperdicio.reset();
+        btnCancelar.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+
+</html

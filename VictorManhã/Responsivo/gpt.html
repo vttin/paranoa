@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico de Peso - BRITO</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #1e1e2f;
+            --card-dark: #27293d;
+            --text-light: #e4e4e4;
+            --accent-blue: #2c7be5;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #weightChart {
+            max-width: 100%;
+            background-color: var(--card-dark);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        #dataTable {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        #dataTable th, #dataTable td {
+            background-color: var(--card-dark);
+            color: var(--text-light);
+            padding: 10px;
+            text-align: center;
+        }
+
+        .editable-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #editModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-dark);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="weightChart"></canvas>
+    </div>
+    
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Peso (kg)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="dataBody">
+            <!-- Linhas serão preenchidas dinamicamente -->
+        </tbody>
+    </table>
+
+    <div id="editModal">
+        <div class="modal-content">
+            <h2>Editar Registro</h2>
+            <form id="editForm">
+                <label>Data:</label>
+                <input type="date" id="editDate" required>
+                
+                <label>Peso (kg):</label>
+                <input type="number" id="editWeight" step="0.1" required>
+                
+                <div>
+                    <button type="submit" class="editable-btn">Salvar</button>
+                    <button type="button" id="deleteBtn" class="editable-btn">Excluir</button>
+                    <button type="button" id="closeModal" class="editable-btn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <button id="addNewRecord" class="editable-btn">Adicionar Novo Registro</button>
+
+    <script>
+        let weightData = JSON.parse(localStorage.getItem('weightData')) || [
+            { date: '2023-01-01', weight: 75 },
+            { date: '2023-02-01', weight: 73 },
+            { date: '2023-03-01', weight: 72 },
+            { date: '2023-04-01', weight: 70 }
+        ];
+
+        let currentEditIndex = null;
+        let chart;
+
+        function saveToLocalStorage() {
+            localStorage.setItem('weightData', JSON.stringify(weightData));
+        }
+
+        function renderChart() {
+            const ctx = document.getElementById('weightChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: weightData.map(item => item.date),
+                    datasets: [{
+                        label: 'Peso (kg)',
+                        data: weightData.map(item => item.weight),
+                        borderColor: '#2c7be5',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderTable() {
+            const tableBody = document.getElementById('dataBody');
+            tableBody.innerHTML = '';
+
+            weightData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                const dateCell = document.createElement('td');
+                dateCell.textContent = item.date;
+
+                const weightCell = document.createElement('td');
+                weightCell.textContent = item.weight;
+
+                const actionCell = document.createElement('td');
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Editar';
+                editButton.classList.add('editable-btn');
+                editButton.onclick = () => openEditModal(index);
+
+                actionCell.appendChild(editButton);
+
+                row.appendChild(dateCell);
+                row.appendChild(weightCell);
+                row.appendChild(actionCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function openEditModal(index) {
+            currentEditIndex = index;
+            const item = weightData[index];
+            
+            document.getElementById('editDate').value = item.date;
+            document.getElementById('editWeight').value = item.weight;
+            
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newDate = document.getElementById('editDate').value;
+            const newWeight = parseFloat(document.getElementById('editWeight').value);
+
+            weightData[currentEditIndex] = { date: newDate, weight: newWeight };
+            
+            saveToLocalStorage();
+            renderChart();
+            renderTable();
+            
+            document.getElementById('editModal').style.display = 'none';
+        });
+
+        document.getElementById('deleteBtn').addEventListener('click', () => {
+            weightData.splice(currentEditIndex, 1);
+            saveToLocalStorage();
+            renderChart();
+            renderTable();
+            document.getElementById('editModal').style.display = 'none';
+        });
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('editModal').style.display = 'none';
+        });
+
+        document.getElementById('addNewRecord').addEventListener('click', () => {
+            const newRecord = { 
+                date: new Date().toISOString().split('T')[0], 
+                weight: 70 
+            };
+            
+            weightData.push(newRecord);
+            saveToLocalStorage();
+            renderChart();
+            renderTable();
+        });
+
+        // Inicialização
+        renderChart();
+        renderTable();
+    </script>
+</body>
+</html

@@ -1,0 +1,146 @@
+
+
+.custom{
+    justify-content: center;
+    align-items: center;
+}
+.vtr{
+    justify-content: center;
+    text-align: center;
+}
+footer {
+	background-color: #333;
+	color: #fff;
+	padding: 4px;
+	text-align: center;
+	margin-top: 50px;
+}
+
+.cor2{
+    margin-left: -30px;
+    background-color: rgb(38, 0, 255);
+    width: 300px;
+    height: 200px;
+}
+.cor3{
+    margin-left: -30px;
+    background-color: rgb(23, 179, 82);
+    width:300px;
+    height: 200px;
+}
+.cor4{
+    margin-left: -30px;
+    background-color: rgb(235, 201, 10);
+    width: 300px;
+    height: 200px;
+}
+.cor5{
+    margin-left: -30px;
+    background-color: rgb(235, 10, 10);
+    width: 300px;
+    height: 200px;
+}
+.cor6{
+    
+    margin-left: -410px;
+    background-color: rgb(235, 10, 10);
+    width: 600px;
+    height: 200px;
+}
+.cor7{
+    margin-top: 0px;
+    margin-left: 20px;
+    background-color: rgb(235, 201, 10);
+    width: 440px;
+    height: 200px;
+}
+.cor8{
+    
+    margin-left: -80px;
+    background-color: rgb(18, 235, 10);
+    width: 300px;
+    height: 200px;
+}
+.cor9{
+    
+    margin-left: -500px;
+    background-color: rgb(10, 44, 235);
+    width: 720px;
+    height: 200px;
+}
+
+@media (max-width:768px){
+        .cor4, .cor5{
+            margin-top: 10px;
+        }
+
+}
+
+@media (max-width:768px){
+    .cor6, .cor7, .cor8, .cor9{
+        margin-left: -2rem ;
+    }
+
+}
+
+@media (min-width:768px){
+    .cor6{
+        width: 36rem;
+        margin-left: -22rem;
+    }
+
+}
+
+@media (max-width:1000px){
+    .cor6{
+        width: 36rem;
+    }
+
+}
+
+@media (min-width:768px){
+    .cor7{
+        width: 20rem;
+        margin-left: 7rem;
+    }
+
+}
+
+@media (max-width:768px){
+    .cor7{
+        width: 36rem;
+        
+    }
+
+}
+
+@media (min-width:768px){
+    .cor8{
+        width: 17rem;
+        margin-left: -4.5rem;
+    }
+
+}
+
+@media (max-width:768px){
+    .cor8{
+        width: 36rem;
+    }
+
+}
+
+
+@media (min-width:768px){
+    .cor9{
+        width: 36rem;
+        margin-left: -21rem;
+    }
+
+}
+
+@media (max-width:768px){
+    .cor9{
+        width: 36rem;
+    }
+
+}

@@ -1,0 +1,190 @@
+/* Geral */
+
+.apresenta{
+  width: 100%;
+  height: 100vh;
+  background-image:
+  linear-gradient(rgba(8, 71, 119, 0.534),rgb(0, 0, 0)),
+  url(information-technology-network-rh4heca9nxqd1kn0.jpg);
+  background-size: cover;
+}
+
+
+body {
+  background-color: rgb(74, 106, 136) !important;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Garante que os elementos fiquem no topo */
+  min-height: 100vh; /* Garantir que a tela ocupe toda a altura */
+}
+
+footer {
+  background-color: rgb(10, 10, 10);
+  padding: 10px 0;
+  text-align: center;
+  color: white;
+  width: 100%; /* Footer ocupa toda a largura */
+  position: absolute;
+  bottom: 0; /* Fixa o footer no final da tela */
+  left: 0;
+}
+
+a{
+  text-decoration: none;
+}
+
+.vtr {
+  justify-content: center;
+  text-align: center;
+}
+
+/* Imagem centralizada e responsiva */
+img {
+  width: 60%;
+  max-width: 500px; /* Limita a largura máxima */
+  display: block;
+  margin: 20px auto;
+  margin-top: 70px; /* Centraliza a imagem */
+}
+
+.filho {
+  margin: 20px auto;
+  justify-content: center;
+  background-color: white;
+  width: 90%; /* Formulário ocupa 90% da largura em telas pequenas */
+  max-width: 450px; /* Limite máximo de largura */
+  padding: 20px;  
+  margin-top: 100px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao formulário */
+}
+
+/* Ajuste dos botões e campos */
+.btn {
+  width: 100%;
+  text-align: center;
+}
+
+#corbtn {
+  color: white;
+  text-decoration: none;
+}
+
+.texto {
+  color: rgb(0, 0, 0);
+}
+
+/* Responsividade - Otimização para telas menores */
+@media (max-width: 1024px) {
+  img {
+    width: 50%; /* Reduz a largura da imagem em telas grandes */
+  }
+
+  .filho {
+    width: 80%; /* Formulário ocupa mais espaço */
+  
+  }
+
+  h1 {
+    font-size: 2rem; /* Ajuste de fonte para tablets */
+  }
+}
+
+/* Responsividade para tablets e dispositivos de tamanho médio */
+@media (max-width: 768px) {
+  img {
+    width: 70%; /* Aumenta a largura da imagem em tablets */
+  }
+
+  .filho {
+    width: 85%;
+  }
+
+  .form-group {
+    margin-bottom: 20px; /* Aumenta o espaçamento entre os campos do formulário */
+  }
+
+  h1 {
+    font-size: 1.8rem; /* Ajuste da fonte */
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/* Responsividade para telas menores (smartphones) */
+@media (max-width: 480px) {
+  img {
+    width: 80%; /* Aumenta a largura da imagem em smartphones */
+  }
+
+  .filho {
+    width: 90%; /* Formulário ocupa 90% da largura da tela */
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.6rem; /* Ajuste de fonte para dispositivos muito pequenos */
+  }
+
+  .form-group {
+    margin-bottom: 15px; /* Ajusta o espaçamento dos campos */
+  }
+
+  .btn {
+    padding: 12px; /* Aumenta a altura do botão em telas pequenas */
+  }
+}
+
+@media (max-width: 320px) {
+  img {
+    width: 90%; /* Ajusta ainda mais a largura da imagem */
+  }
+
+  .filho {
+    width: 95%; /* Formulário ocupa quase toda a tela */
+  }
+
+  h1 {
+    font-size: 1.4rem; /* Ajuste de fonte para dispositivos super pequenos */
+  }
+}
+.cor{
+  color: white;
+  text-decoration: none;
+}
+
+form button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff; /* Azul */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #0056b3; /* Azul mais escuro */
+}
+
+form button:focus {
+  outline: none;
+}
+
+@media (max-width: 520px) {
+  header {
+    margin: -20px;
+    height: 400px;
+   background-color: red;
+  
+  }
+}

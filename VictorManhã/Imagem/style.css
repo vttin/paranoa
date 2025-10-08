@@ -1,0 +1,52 @@
+#quadrado {
+    background-color: rgb(255, 177, 10);
+    width: 150px;
+    height: 150px;
+    filter: brightness(50%);
+    transition: 500ms linear;
+}
+#quadrado:hover {
+    background-color: rgb(255, 66, 82);
+    width: 300px;
+    height: 300px;
+    filter: brightness(100%);
+    transition: 500ms linear;
+}
+#quadrado2 {
+    background-image: url('https://i.pinimg.com/474x/84/70/53/847053626a0d7bea0fe32073534d6a2c.jpg');
+    width: 400px;
+    height: 400px;
+    background-size: cover;
+    transition: 500ms linear;
+
+
+    &:hover {
+        background-image: url('https://i.pinimg.com/736x/53/39/94/5339940807e1a8615ae1c9bdc678eafb.jpg');
+        width: 500px;
+        height: 500px;
+        box-shadow: rgb(110, 110, 110) 0px 15px 15px;
+        transition: 500ms linear;
+
+    }
+}
+h1{
+    text-align: center;
+    font-size: 50px;
+}
+
+/*Tela Pequena */
+@media (max-width: 750px){
+    #quadrado2{
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/*Tela media */
+@media (max-width: 751px){
+    #quadrado2{
+        width: 300px;
+        height: 300px;
+    }
+}
+

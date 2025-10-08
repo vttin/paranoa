@@ -1,0 +1,151 @@
+.apresenta{
+    width: 100%;
+    height: 100vh;
+    background-image:
+    linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.664)),
+    url(Imagens/inicio.pngpng.png);
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+
+   
+}
+.navbar a{
+    color: white !important;
+    transition: color 500ms !important;
+}
+.navbar .cabeçalho:hover{
+    color: rgb(245, 173, 18) !important;
+    border-bottom: 2px solid  rgb(245, 173, 18);
+}
+.logo{
+    width: 15%;
+    height: 15%;
+    &:hover{
+        transform: scale(1.01);
+        transition: 500ms linear;
+        filter: brightness(110%);
+    }
+}
+.sobre{
+    padding-top: 4rem;
+    word-wrap: break-word !important;
+}
+.projeto{
+    padding-top: 7rem ;
+    word-wrap: break-word !important;
+}
+.mim{
+    font-size: 1.65rem;
+    word-wrap: break-word !important;
+    padding-top: 2rem;
+}
+
+.cabeçalho{
+    color: rgb(255, 255, 255) !important;
+}
+
+.custom{
+    background-color: rgb(0, 0, 0) !important; 
+    
+}
+
+.jumbotron{
+    background-color: transparent !important;
+    color: white;
+}
+
+
+
+.titulo{
+    font-size: 3rem !important;
+    font-weight:  600 !important;
+    margin-top: 6rem;
+    white-space: normal;
+    
+}
+.texto{
+    font-size: 3rem !important;
+    font-weight:  600 !important;
+    margin-left: 1rem;
+    white-space: normal;
+}
+.texto2{
+    font-size: 3rem !important;
+    font-weight:  600 !important;
+    margin-left: 1rem;
+    color: rgb(253, 168, 58);
+    white-space: normal;
+}
+.fundo{
+    background-color: black;
+    margin-top: -25px;
+}
+.card{
+    width: 90%;
+    margin-top: 50px;
+    margin-bottom: 70px;
+    filter: brightness(60%);
+    transition: 500ms linear;
+    img{
+        height: 12rem;
+    }
+
+ 
+}
+footer{
+    background-color: rgb(10, 10, 10);
+    padding-top: 20px;
+}
+
+    
+.azul{
+    color: rgb(250, 165, 38);
+}
+.vtr{
+    justify-content: center;
+    text-align: center;
+}
+
+
+/*Tela Pequena */
+@media (max-width: 200px){
+    h1{
+        font-size: 20px !important;  
+        width: 10px;
+        height: 100px;
+    }
+}
+
+
+.custom2{
+    background-color: rgb(240, 163, 21) !important;
+}
+.corcard{
+    background-color: black;
+}
+
+
+
+@media (max-width: 768px) {
+     .logo {
+        display: none;
+    }
+    .custom2{
+        margin-left: 250px;
+    }
+    
+}
+
+.cont1{
+    padding-left: 50px !important;
+}
+.card{
+    width: 100%;
+    border: solid 1px gold ;
+}
+.imga{
+    width: 50%;
+    position: relative;
+    left: 25%;
+    
+}

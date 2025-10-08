@@ -1,0 +1,20 @@
+
+@keyframes girar{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+.bola{
+    width: 300px;
+    height: 300px;
+    animation: girar 2s linear infinite;
+}
+div{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 130px;
+}
